@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
+
+      - name: Upload Velocity plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreshwaterReportV-Velocity
+          path: velocity/build/libs/FreshwaterReportV-Velocity-*.jar
+          if-no-files-found: error
+
+      - name: Upload Waterfall companion plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreshwaterReportV-Companion
+          path: waterfall-companion/build/libs/FreshwaterReportV-Companion-*.jar
+          if-no-files-found: error
+
+      - name: Publish Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            velocity/build/libs/FreshwaterReportV-Velocity-*.jar
+            waterfall-companion/build/libs/FreshwaterReportV-Companion-*.jar
+          generate_release_notes: true
