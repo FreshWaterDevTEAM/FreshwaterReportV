@@ -1,0 +1,64 @@
+# ============================================================
+#  FreshwaterReportV 主配置 (安装在 Velocity 前端代理)
+# ============================================================
+
+# MySQL / MariaDB 数据库（全服共享举报数据）
+database:
+  host: "127.0.0.1"
+  port: 3306
+  database: "freshwater_report"
+  username: "root"
+  password: ""
+  # 连接池大小
+  pool-size: 6
+  # 数据表前缀
+  table-prefix: "fr_"
+  use-ssl: false
+
+# HTTP REST API（带 Bearer Token 鉴权，供外部系统集成）
+http-api:
+  enabled: false
+  host: "127.0.0.1"
+  port: 8085
+  # 访问令牌，请求头需携带: Authorization: Bearer <token>
+  token: "change-me-please"
+
+# 同一玩家两次举报之间的冷却时间（秒）。拥有 freshwaterreport.report.cooldownbypass 可绕过
+report-cooldown-seconds: 30
+
+# 嵌套代理模式：Velocity 在前、Waterfall 作为子代理在后时设为 true。
+# 开启后 /reports tp 会经由 Waterfall 伴生插件二段传送到真实子服，
+# 并通过伴生插件上报玩家真实子服位置。
+nested-proxy-mode: false
+
+# 嵌套模式下，向伴生插件查询真实子服后等待应答并写回记录的超时时间（毫秒）
+companion-query-timeout-ms: 800
+
+# 是否允许玩家提交预设列表之外的自定义文字原因
+# 为 true 时，提交自定义原因还需 freshwaterreport.report.custom 权限
+allow-custom-reason: false
+
+# 是否启用 /reports tp 跨服传送
+teleport-enabled: true
+
+# 预设举报原因列表。玩家可用 /report <玩家> <id> 直接选择，
+# 或 /report <玩家> 弹出可点击菜单。id 用于 Tab 补全与命令匹配。
+reasons:
+  - id: cheating
+    display: "作弊 / 外挂"
+    description: "使用第三方作弊客户端或外挂"
+  - id: abuse
+    display: "辱骂 / 人身攻击"
+    description: "言语辱骂、人身攻击或骚扰"
+  - id: griefing
+    display: "破坏 / 恶意搞破坏"
+    description: "恶意破坏建筑或他人财产"
+  - id: advertising
+    display: "刷屏 / 广告"
+    description: "频繁刷屏或发布广告"
+  - id: cheating-bug
+    display: "利用漏洞 / Bug"
+    description: "利用游戏或服务器漏洞牟利"
+  - id: other
+    display: "其它"
+    description: "其它违规行为"

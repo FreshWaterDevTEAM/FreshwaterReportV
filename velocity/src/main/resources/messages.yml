@@ -1,0 +1,69 @@
+# ============================================================
+#  FreshwaterReportV 消息文件（支持 MiniMessage 格式，含颜色/点击/悬浮）
+#  占位符示例: <id> <target> <reason> <server> 等
+# ============================================================
+
+prefix: "<gradient:#36d1dc:#5b86e5>[举报]</gradient> "
+
+general:
+  player-only: "<red>该命令只能由玩家执行。"
+  no-permission: "<red>你没有权限执行此操作。"
+  error: "<red>操作失败，请联系管理员查看后台日志。"
+
+status:
+  OPEN: "<yellow>待处理"
+  CLAIMED: "<aqua>处理中"
+  CLOSED: "<green>已关闭"
+
+report:
+  usage: "<gray>用法: <white>/report <玩家> [原因]</white> —— 直接输入 /report <玩家> 可弹出原因菜单。"
+  target-not-found: "<red>找不到在线玩家: <white><target></white>"
+  cannot-self: "<red>你不能举报自己。"
+  cooldown: "<red>举报太频繁，请在 <yellow><seconds></yellow> 秒后再试。"
+  invalid-reason: "<red>无效的原因。可用原因: <yellow><reasons></yellow>"
+  custom-not-allowed: "<red>不允许自定义原因，请从预设列表中选择。"
+  choose-reason-header: "<gray>请选择举报 <red><target></red> 的原因（点击选择）:"
+  choose-reason-entry: "<gray>- </gray><click:run_command:'/report <target> <id>'><hover:show_text:'<gray><description>'><yellow><display></yellow></hover></click>"
+  success: "<green>已提交对 <white><target></white> 的举报，编号 <yellow>#<id></yellow>，感谢你的反馈！"
+
+notify:
+  new-report: "<gold>[新举报 #<id>]</gold> <yellow><reporter></yellow> <gray>举报了</gray> <red><target></red> <gray>(</gray><white><reason></white><gray>) @ <server></gray> <gray>»</gray> <click:run_command:'/reports info <id>'><hover:show_text:'查看详情'><aqua>[详情]</aqua></hover></click> <click:run_command:'/reports claim <id>'><hover:show_text:'认领此举报'><green>[认领]</green></hover></click> <click:run_command:'/reports tp <id>'><hover:show_text:'传送到现场'><light_purple>[传送]</light_purple></hover></click>"
+
+reports:
+  usage: "<gray>用法: <white>/reports <list|info|claim|close|reopen|note|tp|delete> [参数]</white>"
+  list-header: "<gradient:#36d1dc:#5b86e5>===== 举报列表 (第 <page>/<pages> 页, 共 <total> 条) =====</gradient>"
+  list-empty: "<gray>没有符合条件的举报。"
+  list-entry: "<gray>#<id> </gray><status> <yellow><reporter></yellow><gray>→</gray><red><target></red> <gray>(</gray><white><reason></white><gray>) @<server></gray> <click:run_command:'/reports info <id>'><aqua>[详情]</aqua></click> <click:run_command:'/reports claim <id>'><green>[认领]</green></click> <click:run_command:'/reports tp <id>'><light_purple>[传送]</light_purple></click>"
+  not-found: "<red>找不到编号为 <yellow>#<id></yellow> 的举报。"
+  claimed: "<green>已认领举报 <yellow>#<id></yellow>。"
+  closed: "<green>已关闭举报 <yellow>#<id></yellow>。"
+  reopened: "<green>已重新打开举报 <yellow>#<id></yellow>。"
+  note-added: "<green>已为举报 <yellow>#<id></yellow> 添加备注。"
+  deleted: "<green>已删除举报 <yellow>#<id></yellow>。"
+  info:
+    title: "<gradient:#36d1dc:#5b86e5>===== 举报详情 #<id> =====</gradient>"
+    status: "<gray>状态: </gray><status>"
+    reporter: "<gray>举报人: </gray><yellow><reporter></yellow>"
+    target: "<gray>被举报: </gray><red><target></red>"
+    reason: "<gray>原因: </gray><white><reason></white>"
+    server: "<gray>所在服务器: </gray><white><server></white>"
+    handler: "<gray>处理者: </gray><white><handler></white>"
+    created: "<gray>提交时间: </gray><white><created></white>"
+    updated: "<gray>更新时间: </gray><white><updated></white>"
+    notes-header: "<gray>--- 备注 ---"
+    note-entry: "<gray>· </gray><yellow><author></yellow> <dark_gray>(<time>)</dark_gray><gray>: </gray><white><content></white>"
+    actions: "<click:run_command:'/reports claim <id>'><green>[认领]</green></click> <click:run_command:'/reports close <id>'><gold>[关闭]</gold></click> <click:run_command:'/reports tp <id>'><light_purple>[传送]</light_purple></click> <click:suggest_command:'/reports note <id> '><aqua>[备注]</aqua></click>"
+
+history:
+  usage: "<gray>用法: <white>/reporthistory <玩家></white>"
+  header: "<gradient:#36d1dc:#5b86e5>===== <target> 的被举报历史 (共 <count> 条) =====</gradient>"
+  entry: "<gray>#<id> </gray><status> <gray>(</gray><white><reason></white><gray>) @<server></gray> <dark_gray><time></dark_gray>"
+  empty: "<gray>玩家 <white><target></white> 没有被举报记录。"
+
+teleport:
+  disabled: "<red>跨服传送功能已被管理员禁用。"
+  target-offline: "<red>被举报玩家 <white><target></white> 当前不在线，无法传送。"
+  success: "<green>已将你传送到 <white><target></white> 所在服务器 <yellow><server></yellow>。"
+  failed: "<red>传送失败，无法连接到服务器 <yellow><server></yellow>。"
+  nested-sent: "<green>已请求传送到 <white><target></white> 所在子服（经子代理）。"
+  nested-no-companion: "<yellow>已到达子代理入口，但未能下发定向传送（请确认 Waterfall 已安装伴生插件）。"

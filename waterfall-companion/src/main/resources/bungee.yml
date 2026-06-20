@@ -1,0 +1,5 @@
+name: FreshwaterReportCompanion
+main: com.freshwater.report.companion.FreshwaterReportCompanion
+version: ${version}
+author: 淡水岛开发组
+description: FreshwaterReportV 的 Waterfall 伴生插件，实现嵌套代理下的子服精确传送与位置上报。
