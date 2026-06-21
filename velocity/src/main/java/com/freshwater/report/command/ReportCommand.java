@@ -59,7 +59,7 @@ public final class ReportCommand implements SimpleCommand {
             source.sendMessage(messages.prefixed("general.player-only"));
             return;
         }
-        if (!Permissions.has(source, Permissions.REPORT)) {
+        if (!Permissions.hasAllowedByDefault(source, Permissions.REPORT)) {
             source.sendMessage(messages.prefixed("general.no-permission"));
             return;
         }
@@ -210,6 +210,6 @@ public final class ReportCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return Permissions.has(invocation.source(), Permissions.REPORT);
+        return Permissions.hasAllowedByDefault(invocation.source(), Permissions.REPORT);
     }
 }

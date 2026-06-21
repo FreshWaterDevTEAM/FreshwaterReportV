@@ -1,6 +1,7 @@
 package com.freshwater.report.command;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.permission.Tristate;
 
 /**
  * 权限节点定义与判定。
@@ -40,6 +41,17 @@ public final class Permissions {
             return true;
         }
         return isManagementNode(node) && source.hasPermission(ADMIN);
+    }
+
+    /**
+     * 默认允许判定：未被权限插件显式拒绝（FALSE）即放行。
+     * 用于面向所有玩家的功能（如 /report），使得未安装权限插件时玩家也能使用。
+     */
+    public static boolean hasAllowedByDefault(CommandSource source, String node) {
+        if (source.hasPermission(ALL)) {
+            return true;
+        }
+        return source.getPermissionValue(node) != Tristate.FALSE;
     }
 
     private static boolean isManagementNode(String node) {

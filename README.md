@@ -53,7 +53,7 @@
 
 | 节点 | 作用 |
 | --- | --- |
-| `freshwaterreport.report` | 提交举报 |
+| `freshwaterreport.report` | 提交举报（默认允许所有玩家，可显式设为 `false` 禁用） |
 | `freshwaterreport.report.cooldownbypass` | 绕过举报冷却 |
 | `freshwaterreport.report.custom` | 允许自定义原因（需开启 `allow-custom-reason`） |
 | `freshwaterreport.notify` | 接收游戏内举报通知 |
@@ -68,6 +68,8 @@
 | `freshwaterreport.history` | 查询历史 |
 | `freshwaterreport.admin` | 通配：上述全部 `reports.*` + `history` + `notify` |
 | `freshwaterreport.*` | 全部权限 |
+
+> 注意：Velocity 自身没有 OP/权限系统。`/report` 默认对所有玩家开放，无需权限插件即可使用；但 `/reports`、`/reporthistory` 等管理命令需要在 Velocity 端安装权限插件（如 LuckPerms-Velocity）并授予相应节点，否则仅控制台可用。
 
 ## Java API
 
