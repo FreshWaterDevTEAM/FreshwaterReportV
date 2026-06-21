@@ -27,7 +27,7 @@ public final class ReportRepository {
     public ReportRepository(Database database) {
         this.database = database;
         this.reportsTable = database.tablePrefix() + "reports";
-        this.notesTable = database.tablePrefix() + "report_notes";
+        this.notesTable = database.tablePrefix() + "notes";
     }
 
     public void initSchema() throws SQLException {

@@ -11,8 +11,9 @@ database:
   password: ""
   # 连接池大小
   pool-size: 6
-  # 数据表前缀
-  table-prefix: "fr_"
+  # 数据表前缀（数据库为多系统共享时用于避免表名冲突）
+  # 默认前缀下表名为: report_reports、report_notes
+  table-prefix: "report_"
   use-ssl: false
 
 # HTTP REST API（带 Bearer Token 鉴权，供外部系统集成）

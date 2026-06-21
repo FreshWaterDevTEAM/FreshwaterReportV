@@ -64,7 +64,7 @@ public final class PluginConfig {
                 str(dbSection, "username", "root"),
                 str(dbSection, "password", ""),
                 intVal(dbSection, "pool-size", 6),
-                str(dbSection, "table-prefix", "fr_"),
+                str(dbSection, "table-prefix", "report_"),
                 bool(dbSection, "use-ssl", false)
         );
 
