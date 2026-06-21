@@ -6,11 +6,12 @@
 
 | 模块 | 产物 | 安装位置 | 说明 |
 | --- | --- | --- | --- |
-| `velocity` | `FreshwaterReportV-Velocity-<version>.jar` | Velocity `plugins/` | 主举报插件，必装 |
-| `waterfall-companion` | `FreshwaterReportV-Companion-<version>.jar` | Waterfall `plugins/` | 伴生插件，仅嵌套拓扑需要 |
-| `common` | （被上面两者打包） | - | 共享通道/协议常量 |
+| `velocity` | `FreshwaterReportV-Velocity-<version>.jar` | 前端 Velocity `plugins/` | 主举报插件，必装 |
+| `velocity-companion` | `FreshwaterReportV-VelocityCompanion-<version>.jar` | 后端子 Velocity `plugins/` | 伴生插件，**Velocity 套 Velocity** 时用 |
+| `waterfall-companion` | `FreshwaterReportV-Companion-<version>.jar` | 后端 Waterfall `plugins/` | 伴生插件，**Velocity 套 Waterfall** 时用 |
+| `common` | （被上述模块打包） | - | 共享通道/协议常量 |
 
-> 仅当你的拓扑为 **Velocity 在前、Waterfall 作为子代理在后** 时才需要伴生插件，用于把 `/reports tp` 精确传送到 Waterfall 背后的真实子服，并让举报记录的服务器字段准确。纯 Velocity 环境只需主插件。
+> 伴生插件仅在 **嵌套代理（前端 Velocity + 后端子代理）** 时需要，用于把 `/reports tp` 精确传送到子代理背后的真实子服、让举报记录服务器字段准确、并把主插件配置同步到子代理。请按后端子代理的类型选择对应的伴生插件：后端是 **Velocity** 用 `FreshwaterReportV-VelocityCompanion`，后端是 **Waterfall** 用 `FreshwaterReportV-Companion`。纯单层 Velocity 环境只需主插件。
 
 ## 构建
 

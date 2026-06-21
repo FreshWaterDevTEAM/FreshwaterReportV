@@ -11,4 +11,4 @@ plugins {
 
 rootProject.name = "FreshwaterReportV"
 
-include("common", "velocity", "waterfall-companion")
+include("common", "velocity", "velocity-companion", "waterfall-companion")

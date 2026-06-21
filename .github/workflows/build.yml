@@ -40,6 +40,13 @@ jobs:
           path: velocity/build/libs/FreshwaterReportV-Velocity-*.jar
           if-no-files-found: error
 
+      - name: Upload Velocity companion plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: FreshwaterReportV-VelocityCompanion
+          path: velocity-companion/build/libs/FreshwaterReportV-VelocityCompanion-*.jar
+          if-no-files-found: error
+
       - name: Upload Waterfall companion plugin
         uses: actions/upload-artifact@v4
         with:
@@ -53,6 +60,7 @@ jobs:
         with:
           files: |
             velocity/build/libs/FreshwaterReportV-Velocity-*.jar
+            velocity-companion/build/libs/FreshwaterReportV-VelocityCompanion-*.jar
             waterfall-companion/build/libs/FreshwaterReportV-Companion-*.jar
           generate_release_notes: true
 
@@ -66,4 +74,5 @@ jobs:
           prerelease: true
           files: |
             velocity/build/libs/FreshwaterReportV-Velocity-*.jar
+            velocity-companion/build/libs/FreshwaterReportV-VelocityCompanion-*.jar
             waterfall-companion/build/libs/FreshwaterReportV-Companion-*.jar
