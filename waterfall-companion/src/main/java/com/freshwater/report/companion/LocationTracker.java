@@ -26,5 +26,8 @@ public final class LocationTracker implements Listener {
         String server = event.getServer().getInfo().getName();
         CompanionMessageListener.sendUpstream(event.getPlayer(),
                 Protocol.encode(Protocol.LOCATION_UPDATE, uuid, server));
+
+        // 借机向主插件请求最新配置（带冷却，避免频繁请求）
+        plugin.getConfigSync().requestIfStale(event.getPlayer());
     }
 }

@@ -9,12 +9,19 @@ import net.md_5.bungee.api.plugin.Plugin;
  */
 public final class FreshwaterReportCompanion extends Plugin {
 
+    private ConfigSyncManager configSync;
+
     @Override
     public void onEnable() {
+        this.configSync = new ConfigSyncManager(this);
         getProxy().registerChannel(Channels.REPORT);
         getProxy().getPluginManager().registerListener(this, new CompanionMessageListener(this));
         getProxy().getPluginManager().registerListener(this, new LocationTracker(this));
         getLogger().info("FreshwaterReportV 伴生插件已启用，通道: " + Channels.REPORT);
+    }
+
+    public ConfigSyncManager getConfigSync() {
+        return configSync;
     }
 
     @Override

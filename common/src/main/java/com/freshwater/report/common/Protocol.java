@@ -26,6 +26,12 @@ public final class Protocol {
     /** Waterfall -> Velocity：玩家切换子服时主动上报。args: [targetUuid, serverName] */
     public static final String LOCATION_UPDATE = "LOCATION_UPDATE";
 
+    /** Waterfall -> Velocity：请求同步主插件配置。args: [] */
+    public static final String CONFIG_REQUEST = "CONFIG_REQUEST";
+
+    /** Velocity -> Waterfall：下发配置镜像。args: [configYaml, messagesYaml] */
+    public static final String CONFIG_DATA = "CONFIG_DATA";
+
     private Protocol() {
     }
 

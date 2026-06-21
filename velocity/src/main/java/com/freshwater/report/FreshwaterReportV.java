@@ -84,7 +84,7 @@ public final class FreshwaterReportV {
 
         this.reportService = new ReportServiceImpl(repository);
         this.notificationService = new NotificationService(proxy, messages, logger);
-        this.proxyMessaging = new ProxyMessaging(proxy, logger);
+        this.proxyMessaging = new ProxyMessaging(proxy, logger, dataDirectory);
         this.proxyMessaging.register();
         proxy.getEventManager().register(this, proxyMessaging);
         this.teleportService = new TeleportService(this, proxy, logger, config, messages, proxyMessaging);

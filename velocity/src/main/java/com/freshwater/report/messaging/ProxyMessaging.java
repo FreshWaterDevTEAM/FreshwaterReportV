@@ -10,6 +10,8 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import org.slf4j.Logger;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,11 +27,13 @@ public final class ProxyMessaging {
 
     private final ProxyServer proxy;
     private final Logger logger;
+    private final Path dataDirectory;
     private final ConcurrentHashMap<UUID, String> realServerCache = new ConcurrentHashMap<>();
 
-    public ProxyMessaging(ProxyServer proxy, Logger logger) {
+    public ProxyMessaging(ProxyServer proxy, Logger logger, Path dataDirectory) {
         this.proxy = proxy;
         this.logger = logger;
+        this.dataDirectory = dataDirectory;
     }
 
     public void register() {
@@ -48,7 +52,7 @@ public final class ProxyMessaging {
         // 本通道的数据不应转发给客户端
         event.setResult(PluginMessageEvent.ForwardResult.handled());
 
-        if (!(event.getSource() instanceof ServerConnection)) {
+        if (!(event.getSource() instanceof ServerConnection serverConnection)) {
             return;
         }
         try {
@@ -65,12 +69,35 @@ public final class ProxyMessaging {
                         }
                     }
                 }
+                case Protocol.CONFIG_REQUEST -> sendConfig(serverConnection);
                 default -> {
                     // 其它类型为 Velocity -> Waterfall 方向，代理端忽略
                 }
             }
         } catch (Exception e) {
             logger.warn("处理跨代理插件消息失败", e);
+        }
+    }
+
+    /** 应答伴生插件的配置同步请求：把 config.yml 与 messages.yml 原文下发。 */
+    private void sendConfig(ServerConnection serverConnection) {
+        try {
+            String configYaml = readFile("config.yml");
+            String messagesYaml = readFile("messages.yml");
+            byte[] data = Protocol.encode(Protocol.CONFIG_DATA, configYaml, messagesYaml);
+            serverConnection.sendPluginMessage(IDENTIFIER, data);
+        } catch (Exception e) {
+            logger.warn("下发配置同步数据失败", e);
+        }
+    }
+
+    private String readFile(String name) {
+        try {
+            Path file = dataDirectory.resolve(name);
+            return Files.exists(file) ? Files.readString(file) : "";
+        } catch (Exception e) {
+            logger.warn("读取配置文件失败: {}", name, e);
+            return "";
         }
     }
 

@@ -104,6 +104,14 @@ curl -H "Authorization: Bearer change-me-please" \
      http://127.0.0.1:8085/api/reports?status=OPEN
 ```
 
+## 配置自动同步
+
+伴生插件**无需单独配置**。Velocity 主插件是配置的唯一来源：当 Waterfall 有玩家连接时，伴生插件通过 `freshwater:report` 通道向 Velocity 请求最新的 `config.yml` 与 `messages.yml`，主插件回传后伴生插件将其镜像写入自己的数据目录（`plugins/FreshwaterReportCompanion/`）。
+
+- 跨机器有效（走插件消息通道，无需共享文件系统）
+- 带 30 秒请求冷却，避免频繁同步；主插件配置更新后，下一次有玩家连接即自动拉取
+- 仅当内容有变化时才写盘并打印同步日志
+
 ## 嵌套代理下的精确传送原理
 
 `/reports tp` 在嵌套模式下：Velocity 先把处理者连接到 Waterfall 入口，随后沿其连接下发 `TP_TO_PLAYER` 插件消息；Waterfall 伴生插件实时解析被举报者真实子服并执行 `connect()`，从而精确落点。未安装伴生插件时自动降级为仅到入口并给出提示。

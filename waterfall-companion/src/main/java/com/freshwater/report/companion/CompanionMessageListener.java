@@ -45,6 +45,7 @@ public final class CompanionMessageListener implements Listener {
             case Protocol.TP_TO_PLAYER -> handleTeleport(message.arg(0), message.arg(1));
             case Protocol.QUERY_LOCATION -> handleQuery(message.arg(0),
                     event.getSender() instanceof ProxiedPlayer ? (ProxiedPlayer) event.getSender() : null);
+            case Protocol.CONFIG_DATA -> plugin.getConfigSync().write(message.arg(0), message.arg(1));
             default -> {
                 // 其它类型为上行方向，伴生插件忽略
             }
